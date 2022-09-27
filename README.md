@@ -2,36 +2,6 @@ Stat433_HW01
 ================
 2022-09-27
 
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-    ## Warning: package 'nycflights13' was built under R version 4.1.3
-
-    ## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
-
-    ## v tibble  3.1.6     v purrr   0.3.4
-    ## v tidyr   1.1.4     v stringr 1.4.0
-    ## v readr   2.1.0     v forcats 0.5.1
-
-    ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-    ## x dplyr::filter() masks stats::filter()
-    ## x dplyr::lag()    masks stats::lag()
-
-    ## 
-    ## Attaching package: 'lubridate'
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     date, intersect, setdiff, union
-
 ## 1. How many flights have a missing dep_time? What other variables are missing? What might these rows represent?
 
 ``` r

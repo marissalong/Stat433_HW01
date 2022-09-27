@@ -4,7 +4,7 @@ output: github_document
 date: '2022-09-27'
 ---
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
 library(dplyr)
 # install.packages("nycflights13")
 library(nycflights13)
