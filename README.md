@@ -97,7 +97,7 @@ summary(flights)
 
     It is possible that the missing rows represent that these flights didn't actually depart or arrive for various reasons. Maybe it's rescheduled or cancelled during flights and landed in the middle of the route (or crushed?). There is also the possibility that the data is just missing for these normal flights. 
 
-## 2. Currently dep_time and sched_dep_time are convenient to look at, but hard to compute with because they鈥檙e not really continuous numbers. Convert them to a more convenient representation of number of minutes since midnight.
+## 2. Currently dep_time and sched_dep_time are convenient to look at, but hard to compute with because they are not really continuous numbers. Convert them to a more convenient representation of number of minutes since midnight.
 
 ``` r
 flights %>%
