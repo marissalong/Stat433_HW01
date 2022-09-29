@@ -38,8 +38,8 @@ summary(flights)
 ```{r}
 flights %>%
   select(dep_time, sched_dep_time) %>%
-  mutate(dep_time_minutes = (dep_time%/%100*60 + dep_time%%100) %% 1440,
-         sched_dep_time_minutes = (sched_dep_time%/%100*60 + sched_dep_time%%100)) %% 1440
+  mutate(dep_time_minutes = (dep_time%/%100*60+dep_time%%100)%%1440,
+         sched_dep_time_minutes = (sched_dep_time%/%100*60+sched_dep_time%%100)%% 1440) 
 ```
 
 ## 3. Look at the number of canceled flights per day. Is there a pattern? Is the proportion of canceled flights related to the average delay? Use multiple dyplr operations, all on one line, concluding with ggplot(aes(x= ,y=)) + geom_point()
