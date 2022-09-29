@@ -31,15 +31,15 @@ summary(flights)
     9430 missing air_time
     
 ##### 1c. What might these rows represent?
-    It is possible that the missing rows represent that these flights didn't actually depart or arrive for various reasons. Maybe it's rescheduled or cancelled during flights and landed in the middle of the route (or crushed?). There is also the possibility that the data is just missing for these normal flights. 
+    It is possible that the missing rows represent that these flights didn't actually depart or arrive for various reasons. Maybe it's rescheduled or cancelled during flights and didn't land in the original destination (or crushed?). There is also the possibility that the data is just missing for these normal flights. 
 
 ## 2. Currently dep_time and sched_dep_time are convenient to look at, but hard to compute with because they are not really continuous numbers. Convert them to a more convenient representation of number of minutes since midnight.
 
 ```{r}
 flights %>%
-#  select(dep_time, sched_dep_time) %>%
-  mutate(dep_time_minutes = dep_time%/%100*60 + dep_time%%100,
-         sched_dep_time_minutes = sched_dep_time%/%100*60 + sched_dep_time%%100)
+  select(dep_time, sched_dep_time) %>%
+  mutate(dep_time_minutes = (dep_time%/%100*60 + dep_time%%100) %% 1440,
+         sched_dep_time_minutes = (sched_dep_time%/%100*60 + sched_dep_time%%100)) %% 1440
 ```
 
 ## 3. Look at the number of canceled flights per day. Is there a pattern? Is the proportion of canceled flights related to the average delay? Use multiple dyplr operations, all on one line, concluding with ggplot(aes(x= ,y=)) + geom_point()
@@ -50,12 +50,15 @@ flights %>%
   group_by(date) %>%
   summarize(canceled = sum(is.na(dep_delay)|is.na(arr_delay)),
             flight_num = n()) %>%
-  ggplot(aes(x=date, y=canceled)) +
+  ggplot(aes(x=flight_num, y=canceled)) +
   geom_point() +
-  labs(x = "date",
-       y = "number of canceled flights") +
-  geom_smooth(se=F)
+  labs(x = "number of flights per day",
+       y = "number of canceled flights per day")
+#  geom_smooth(se=F)
 ```
+
+    
+    According to the plot, it appears that the number of canceled flights per day increases when there is an increase of the number of all flights per day with a few outliers.
 
 ```{r}
 flights %>%
@@ -63,14 +66,14 @@ flights %>%
   group_by(date) %>%
   summarize(canceled = sum(is.na(dep_delay)|is.na(arr_delay)),
             flight_num = n(),
-            prop_canceld = canceled/flight_num,
+            prop_canceled = canceled/flight_num,
             avg_dep_delay = mean(dep_delay, na.rm=TRUE),
             avg_arr_delay = mean(arr_delay, na.rm=TRUE)) %>%
-  ggplot(aes(x=prop_canceld)) +
-  geom_point(aes(y=avg_dep_delay), color="red") +
-  geom_point(aes(y=avg_arr_delay), color="blue") +
-  labs(x = "proportion of canceled flights",
-       y = "average delay")
+  ggplot() +
+  geom_point(aes(x=avg_dep_delay,y=prop_canceled), color="green", alpha=0.5) +
+  geom_point(aes(x=avg_arr_delay,y=prop_canceled), color="red", alpha=0.5) +
+  labs(x = "average delay (departure/arrival)",
+       y = "proportion of cancelled flights per day")
 ```
-      
-    There isn't a strong relationship between the proportion of canceled flights and the average delay (both the delay in departure or in arrival). 
+
+    According to the graph, the average delay for departure increase, the proportion of cancelled flights also increase. It also works the same way for average delay for arrival and the proportion of cancelled flights. There is an increasing relationship between both types of average delay and proportion of cancelled flights. 
