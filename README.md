@@ -2,6 +2,8 @@ Stat433_HW01
 ================
 2022-09-27
 
+[Stat433 HW01 on github](https://github.com/marissalong/Stat433_HW01)
+
 ## 1. How many flights have a missing dep_time? What other variables are missing? What might these rows represent?
 
 ``` r
@@ -102,14 +104,10 @@ flights %>%
   ggplot(aes(x=flight_num, y=canceled)) +
   geom_point() +
   labs(x = "number of flights per day",
-       y = "number of canceled flights per day")
+       y = "number of cancelled flights per day")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
-
-``` r
-#  geom_smooth(se=F)
-```
 
     According to the plot, it appears that the number of canceled flights per day increases when there is an increase of the number of all flights per day with a few outliers.
 
@@ -124,7 +122,7 @@ flights %>%
             avg_arr_delay = mean(arr_delay, na.rm=TRUE)) %>%
   ggplot() +
   geom_point(aes(x=avg_dep_delay,y=prop_canceled), color="green", alpha=0.5) +
-  geom_point(aes(x=avg_arr_delay,y=prop_canceled), color="red", alpha=0.5) +
+  geom_point(aes(x=avg_arr_delay,y=prop_canceled), color="red", alpha=0.25) +
   labs(x = "average delay (departure/arrival)",
        y = "proportion of cancelled flights per day")
 ```
